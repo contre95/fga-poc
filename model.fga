@@ -1,20 +1,31 @@
 model
   schema 1.1
-
 type user
 
-type house
+type department
   relations
-    define member: [user] or admin or friend or partner
-    define admin: [user]
-    define friend: [user]
-    define partner: [user]
-    define guest: [user]
-    define can_invite: partner
+    define head: [user]                  
+    define tech_expert: [user]         
 
-
-type app
+type team
   relations
-    define homelab: [house]
-    define all_access: admin from homelab
-    define can_view: member from homelab 
+    define parent_department: [department]
+    define ic: [user]                
+    define staff: [user] or head from parent_department # You tech_expert will have same permissions as staff eng in his department's teams.
+    define manager: [user]                
+
+type aws_ou
+  relations
+    define owner: [team#manager]
+    define admin: [team#staff, department#tech_expert]
+        
+type aws_account
+  relations
+    define ou: [aws_ou]
+    define team: [team]
+    
+    define owner: [team#manager] or owner from ou
+    define admin: [team#staff]  or admin from ou
+    define read_only: ic from team or manager from team or staff from team
+    define read_write: [team#ic]
+    define iam: [team#staff, team#manager] or owner from ou

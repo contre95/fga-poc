@@ -1,0 +1,24 @@
+  - user: user:becki
+    relation: manager
+    object: team:platsec
+
+  - user: user:contre
+    relation: ic
+    object: team:platsec
+
+  - user: user:nico
+    relation: staff
+    object: team:platsec
+
+  - user: user:steve
+    relation: tech_expert
+    object: department:it_department
+
+  - user: user:david
+    relation: head
+    object: department:it_department
+
+  - user: aws_ou:security
+    relation: ou
+    object: aws_account:cspm
+
